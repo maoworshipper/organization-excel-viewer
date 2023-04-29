@@ -1,0 +1,69 @@
+.container {
+  background-color: white;
+  min-width: 300px;
+  width: 300px;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0px 10px 15px rgba(17, 131, 141, 0.5);
+  margin: 0 auto;
+
+  .header {
+    background-image: url("./public/bg-pattern-card.svg");
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-align: center;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+
+    .image {
+      margin: auto;
+      width: 100px;
+	  height: 100px;
+	  background-color: #eee;
+      border: solid white 4px;
+      border-radius: 50%;
+      margin-top: 60px;
+    }
+  }
+
+  .dataContainer {
+    display: flex;
+    border-top: solid rgb(206, 206, 206) 1px;
+    text-align: center;
+	margin-top: 0.5rem;
+
+    .extraData {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.25rem;
+      margin: 1rem auto;
+    }
+  }
+}
+
+.boldText {
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0;
+}
+
+.normalText {
+  font-weight: normal;
+  font-size: 0.95rem;
+  color: hsl(0, 0%, 50%);
+  text-align: center;
+  margin: 0;
+}
+
+.smallText {
+  font-weight: normal;
+  font-size: 0.7rem;
+  color: hsl(0, 0%, 50%);
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 5px;
+  margin: 0;
+}
