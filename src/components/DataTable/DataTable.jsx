@@ -1,8 +1,9 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useDataStore } from "../../store/data";
+import styles from "./DataTable.module.scss";
 
 export const DataTable = () => {
-  const data = useDataStore((state) => state.data);
+  const data = useDataStore((state) => state.filteredData);
 
   const columns = [
     { field: "id", headerName: "No" },
@@ -22,7 +23,7 @@ export const DataTable = () => {
     <>
       {data?.length > 0 ? (
         <>
-          <div style={{ height: 600, width: "100%" }}>
+          <div className={styles.container}>
             <DataGrid
               rows={data}
               columns={columns}
@@ -34,9 +35,7 @@ export const DataTable = () => {
             />
           </div>
         </>
-      ) : (
-        <p>No hay datos para mostrar</p>
-      )}
+      ) : null}
     </>
   );
 };
