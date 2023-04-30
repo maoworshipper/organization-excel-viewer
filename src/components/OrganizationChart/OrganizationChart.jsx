@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDataStore } from "../../store/data";
 import { Tree, TreeNode } from "react-organizational-chart";
 import { ProfileCard } from "../ProfileCard/ProfileCard";
+import styles from "./OrganizationChart.module.scss";
+import { TEXT } from "../../strings";
 
 export const OrganizationChart = () => {
   const [treeData, setTreeData] = useState([]);
@@ -39,14 +41,13 @@ export const OrganizationChart = () => {
 
   useEffect(() => {
     const result = generateTree(data);
-    console.log(result);
     setTreeData(result);
   }, [data]);
 
   const renderTreeNode = (node) => {
     return (
       <TreeNode
-        key={`tree-one-${node.Nombre}`}
+        key={`tree-one-${node.Nombre}-${node.Mes}`}
         label={<ProfileCard {...node} />}
       >
         {node.children.length > 0
@@ -57,8 +58,10 @@ export const OrganizationChart = () => {
   };
 
   return (
-    <Tree label={<div>Empresa</div>}>
-      {treeData.map((item) => renderTreeNode(item))}
-    </Tree>
+    <div className={styles.container}>
+      <Tree label={<h2 className={styles.title}>{TEXT.ORGANIZATION_CHART}</h2>}>
+        {treeData.map((item) => renderTreeNode(item))}
+      </Tree>
+    </div>
   );
 };
