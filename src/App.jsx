@@ -18,7 +18,7 @@ function App() {
   const promoted = useDataStore((state) => state.promoted);
   const newEmployees = useDataStore((state) => state.newEmployees);
   const language = useLanguageStore((state) => state.language);
-  const toPrint = useRef();
+  const toPrint = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => toPrint.current,
   });
