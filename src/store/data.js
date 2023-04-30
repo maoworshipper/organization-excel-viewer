@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { TEXT } from "../strings";
 
 export const useDataStore = create((set) => ({
   data: [],
@@ -18,10 +17,10 @@ export const useDataStore = create((set) => ({
       images: [...images.filter((obj) => obj.id !== id), { image, id }],
     });
   },
-  setFilteredData: (monthSelected) => {
+  setFilteredData: (monthSelected, removeFilterText) => {
     const data = useDataStore.getState().data;
     const filteredData =
-      monthSelected !== "" && monthSelected !== TEXT.REMOVE_FILTER
+      monthSelected !== "" && monthSelected !== removeFilterText
         ? data.filter((obj) => obj.Mes === monthSelected)
         : data;
     set({ filteredData });
