@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { read, utils } from "xlsx";
 import { useDataStore } from "../store/data";
-import { formatKeysData } from "../utils/objectsFormatter";
+import { useLanguageStore } from "../store/language";
 import {
+  formatKeysData,
+  formatNumber,
   getPromotedNames,
   getNewEmployeesNames,
   getTotalPayroll,
-} from "../utils/getPayrollChanges";
+} from "../utils/index";
+import { TEXT } from "../strings";
 
 const useData = () => {
   const [show, setShow] = useState({
@@ -18,8 +21,37 @@ const useData = () => {
   const filteredData = useDataStore((state) => state.filteredData);
   const data = useDataStore((state) => state.data);
   const setData = useDataStore((state) => state.setData);
+  const promoted = useDataStore((state) => state.promoted);
   const setPromoted = useDataStore((state) => state.setPromoted);
+  const newEmployees = useDataStore((state) => state.newEmployees);
   const setNewEmployees = useDataStore((state) => state.setNewEmployees);
+  const language = useLanguageStore((state) => state.language);
+
+  const showChart = () => {
+    setShow({ ...show, chart: !show.chart });
+  };
+
+  const values = {
+    chart: show.chart && isFiltered,
+    total: isFiltered ? [`$ ${formatNumber(total)}`] : ["-"],
+    buttonChart: {
+      text: show.chart ? TEXT[language].SEE_TABLE : TEXT[language].SEE_CHART,
+      onClick: showChart,
+      disabled: (show.chart && isFiltered) || !show.chart ? !isFiltered : isFiltered,
+    },
+    buttonPrint: {
+      text: TEXT[language].PRINT,
+      disabled: !(show.chart && isFiltered),
+    },
+    promotedBox: {
+      title: TEXT[language].PROMOTED,
+      data: promoted,
+    },
+    hiredBox: {
+      title: TEXT[language].HIRES,
+      data: newEmployees,
+    },
+  };
 
   const importData = (e) => {
     const files = e.target.files;
@@ -38,10 +70,6 @@ const useData = () => {
       };
       reader.readAsArrayBuffer(file);
     }
-  };
-
-  const showChart = () => {
-    setShow({ ...show, chart: !show.chart });
   };
 
   useEffect(() => {
@@ -66,7 +94,7 @@ const useData = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredData]);
 
-  return { isFiltered, show, total, importData, showChart };
+  return { show, importData, showChart, values };
 };
 
 export default useData;

@@ -1,56 +1,72 @@
+import { useRef } from "react";
+import { useDataStore } from "./store/data";
+import { useLanguageStore } from "./store/language";
+import { useReactToPrint } from "react-to-print";
 import { Input } from "./components/Input/Input";
 import { DataTable } from "./components/DataTable/DataTable";
 import useData from "./hooks/useData";
-import Button from "@mui/material/Button";
+import { Button } from "./components/Button/Button";
 import { SelectComponent as Select } from "./components/Select/Select";
 import { OrganizationChart } from "./components/OrganizationChart/OrganizationChart";
-import { formatNumber } from "./utils/formatNumber";
 import { TEXT } from "./strings";
 import styles from "./App.module.scss";
+import { InfoBox } from "./components/InfoBox/InfoBox";
+import { LanguageSwitcher } from "./components/LanguageSwitcher/LanguageSwitcher";
 
 function App() {
-  const { isFiltered, show, total, importData, showChart } = useData();
+  const { show, importData, values } = useData();
+  const promoted = useDataStore((state) => state.promoted);
+  const newEmployees = useDataStore((state) => state.newEmployees);
+  const language = useLanguageStore((state) => state.language);
+  const toPrint = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => toPrint.current,
+  });
+
+  const renderInitialSection = () => {
+    return (
+      <div className={styles.initialSection}>
+        <h1 className={styles.title}>{TEXT[language].TITLE}</h1>
+        <p>{TEXT[language].SUBTITLE}</p>
+        <Input handleChange={importData} />
+      </div>
+    );
+  };
+
+  const renderRightSection = () => {
+    return show.elements ? (
+      <div className={styles.right}>
+        <InfoBox title={TEXT[language].TOTAL} data={values.total} />
+        {promoted.length ? <InfoBox {...values.promotedBox} /> : null}
+        {newEmployees.length ? <InfoBox {...values.hiredBox} /> : null}
+        {values.chart ? (
+          <Button onClick={handlePrint} {...values.buttonPrint} />
+        ) : null}
+      </div>
+    ) : null;
+  };
 
   return (
+    <>
     <main className={styles.main}>
-      {!show.elements ? (
-        <div className={styles.initialSection}>
-          <h1 className={styles.title}>{TEXT.TITLE}</h1>
-          <p>{TEXT.SUBTITLE}</p>
-          <Input handleChange={importData} />
-        </div>
-      ) : null}
-      <div className={styles.dataSection}>
-        <div
-          className={`${styles.dataHeader} ${show.chart ? styles.stretch : ""}`}
-        >
-          {show.elements ? (
-            <>
+      <div className={styles.left}>
+        {!show.elements ? (
+          renderInitialSection()
+        ) : (
+          <div className={styles.dataSection}>
+            <div className={`${styles.header} ${show.chart ? styles.xs : ""}`}>
               <Select />
-              <div className={styles.total}>
-                <span>{TEXT.TOTAL}</span>
-                <span className={styles.value}>
-                  {isFiltered ? `$ ${formatNumber(total)}` : "-"}
-                </span>
-              </div>
-              <Button
-                variant="contained"
-                onClick={showChart}
-                disabled={
-                  (show.chart && isFiltered) || !show.chart
-                    ? !isFiltered
-                    : isFiltered
-                }
-              >
-                {show.chart ? TEXT.SEE_TABLE : TEXT.SEE_CHART}
-              </Button>
-            </>
-          ) : null}
-        </div>
-        {!show.chart ? <DataTable /> : null}
+              <Button {...values.buttonChart} />
+            </div>
+            {!show.chart ? <DataTable /> : null}
+          </div>
+        )}
+        <div ref={toPrint}>{values.chart ? <OrganizationChart /> : null}</div>
       </div>
-      {show.chart && isFiltered ? <OrganizationChart /> : null}
+      {renderRightSection()}
     </main>
+    <LanguageSwitcher />
+    </>
   );
 }
 
