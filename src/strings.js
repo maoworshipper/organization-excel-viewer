@@ -11,6 +11,8 @@ export const TEXT = Object.freeze({
   MONTH: "Mes",
   NAME: "Nombre",
   ID: "ID",
+  NO: "No",
+  REAL_ID: "id",
   INCOME_DATE: "Fecha de ingreso",
   GROSS_SALARY: "Sueldo bruto",
   DIVISION: "División",
@@ -20,4 +22,6 @@ export const TEXT = Object.freeze({
   HIERARCHICAL_LEVEL: "Nivel Jerárquico",
   ACCEPTED_FORMATS: "Formatos aceptados: .csv, .xlsx, .xls",
   ORGANIZATION_CHART: "Organigrama",
+  UPLOAD_IMAGE: "Haz click para subir la imagen",
+  TOTAL: "Total",
 });
