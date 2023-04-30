@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import styles from "./Select.module.scss";
+import { TEXT } from "../../strings";
 
 export const SelectComponent = () => {
   const [months, setMonths] = useState([]);
@@ -15,22 +16,24 @@ export const SelectComponent = () => {
   useEffect(() => {
     const months = data.map((obj) => obj.Mes);
     const uniqueMonths = [...new Set(months)];
+    uniqueMonths.length > 0 && uniqueMonths.unshift(TEXT.REMOVE_FILTER);
     setMonths(uniqueMonths);
   }, [data]);
 
   const handleChange = (event) => {
-    setFilteredData(event.target.value);
-    setMonthSelected(event.target.value);
+    const value = event.target.value;
+    setFilteredData(value);
+    value !== TEXT.REMOVE_FILTER ? setMonthSelected(value) : setMonthSelected("");
   };
 
   return (
     <div className={styles.container}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Filtrar por Mes</InputLabel>
+        <InputLabel id="demo-simple-select-label">{TEXT.FILTER_BY_MONTH}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          label="Filtrar por Mes"
+          label={TEXT.FILTER_BY_MONTH}
           value={monthSelected}
           onChange={handleChange}
         >
