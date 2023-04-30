@@ -8,6 +8,7 @@
   margin: 0 auto;
 
   .header {
+	display: flex;
     background-image: url("./public/bg-pattern-card.svg");
     background-position: 0px 0px;
     background-repeat: no-repeat;
@@ -17,14 +18,40 @@
     border-top-right-radius: 14px;
 
     .image {
-      margin: auto;
+      margin: 60px auto auto;
       width: 100px;
 	  height: 100px;
 	  background-color: #eee;
       border: solid white 4px;
       border-radius: 50%;
-      margin-top: 60px;
+	  object-fit: cover;
     }
+
+	.imagePlaceholder {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100px;
+		height: 100px;
+		background-color: #eee;
+		border: solid white 4px;
+		border-radius: 50%;
+		margin: 60px auto auto;
+    cursor: pointer;
+	}
+
+	.textPlaceholder {
+	  font-weight: bold;
+	  font-size: 1.2rem;
+	  margin: 0.5rem 0;
+	}
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    margin: 01rem auto;
   }
 
   .dataContainer {
@@ -66,4 +93,8 @@
   letter-spacing: 1px;
   line-height: 5px;
   margin: 0;
+}
+
+.hidden {
+	  display: none;
 }
