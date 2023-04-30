@@ -5,6 +5,7 @@ import { formatNumber } from "../../utils/formatNumber";
 import { TEXT } from "../../strings";
 
 export const ProfileCard = ({
+  ID,
   Nombre = "",
   Fecha_de_ingreso = "",
   Sueldo_bruto = "",
@@ -16,7 +17,7 @@ export const ProfileCard = ({
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <ProfileImage name={Nombre} />
+        <ProfileImage name={Nombre} id={ID} />
       </div>
       <div className={styles.content}>
         <h2 className={styles.boldText}>{Nombre}</h2>
@@ -40,6 +41,7 @@ export const ProfileCard = ({
 };
 
 ProfileCard.propTypes = {
+  ID: PropTypes.number,
   Nombre: PropTypes.string,
   Fecha_de_ingreso: PropTypes.string,
   Sueldo_bruto: PropTypes.number,
