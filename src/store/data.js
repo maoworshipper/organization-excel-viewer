@@ -4,9 +4,11 @@ import { TEXT } from "../strings";
 export const useDataStore = create((set) => ({
   data: [],
   filteredData: [],
+  promoted: [],
+  newEmployees: [],
   setData: (data) => {
     set({ data });
-    set({ filteredData: data })
+    set({ filteredData: data });
   },
   setFilteredData: (monthSelected) => {
     const data = useDataStore.getState().data;
@@ -16,4 +18,6 @@ export const useDataStore = create((set) => ({
         : data;
     set({ filteredData });
   },
+  setPromoted: (promoted) => set({ promoted }),
+  setNewEmployees: (newEmployees) => set({ newEmployees }),
 }));
