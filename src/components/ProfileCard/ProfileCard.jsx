@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
 import PropTypes from "prop-types";
+import { ProfileImage } from "./ProfileImage";
 import styles from "./ProfileCard.module.scss";
+import { formatNumber } from "../../utils/formatNumber";
 import { TEXT } from "../../strings";
 
 export const ProfileCard = ({
@@ -12,51 +13,10 @@ export const ProfileCard = ({
   Subarea = "",
   Nivel_Jerarquico = "",
 }) => {
-  const [image, setImage] = useState(null);
-  const inputFile = useRef(null);
-
-  const openFileDialog = () => {
-    inputFile.current.click();
-  };
-
-  const handleImage = (e) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setImage(reader.result);
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  };
-
-  const getInitials = (name) => {
-    const names = name.split(" ");
-    let initials = "";
-    names.forEach((n) => {
-      initials += n[0];
-    });
-    return initials;
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        {image === null ? (
-          <div className={styles.imagePlaceholder} onClick={openFileDialog} title={TEXT.UPLOAD_IMAGE}>
-            <input
-              type="file"
-              accept=".jpg, .png, .jpeg"
-              onChange={handleImage}
-              ref={inputFile}
-              className={styles.hidden}
-            />
-            <p className={styles.textPlaceholder}>
-              {getInitials(Nombre)}
-            </p>
-          </div>
-        ) : (
-          <img src={image} alt={Nombre} className={styles.image} />
-        )}
+        <ProfileImage name={Nombre} />
       </div>
       <div className={styles.content}>
         <h2 className={styles.boldText}>{Nombre}</h2>
@@ -72,9 +32,7 @@ export const ProfileCard = ({
         </div>
         <div className={styles.extraData}>
           <p className={styles.smallText}>{TEXT.GROSS_SALARY}</p>
-          <p className={styles.boldText}>
-            $ {new Intl.NumberFormat("es-CO").format(Sueldo_bruto)}
-          </p>
+          <p className={styles.boldText}>$ {formatNumber(Sueldo_bruto)}</p>
         </div>
       </div>
     </div>
@@ -84,7 +42,7 @@ export const ProfileCard = ({
 ProfileCard.propTypes = {
   Nombre: PropTypes.string,
   Fecha_de_ingreso: PropTypes.string,
-  Sueldo_bruto: PropTypes.string,
+  Sueldo_bruto: PropTypes.number,
   Division: PropTypes.string,
   Area: PropTypes.string,
   Subarea: PropTypes.string,
