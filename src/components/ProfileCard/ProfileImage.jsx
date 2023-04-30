@@ -29,6 +29,13 @@ export const ProfileImage = ({ id, name }) => {
           title={TEXT[language].UPLOAD_IMAGE}
         >
           <p className={styles.textPlaceholder}>{getInitials(name)}</p>
+          <input
+            type="file"
+            accept=".jpg, .png, .jpeg"
+            onChange={(e) => handleImage(e, id)}
+            ref={inputFile}
+            className={styles.hidden}
+          />
         </div>
       ) : (
         <img
@@ -38,13 +45,6 @@ export const ProfileImage = ({ id, name }) => {
           onClick={openFileDialog}
         />
       )}
-      <input
-        type="file"
-        accept=".jpg, .png, .jpeg"
-        onChange={(e) => handleImage(e, id)}
-        ref={inputFile}
-        className={styles.hidden}
-      />
     </>
   );
 };
