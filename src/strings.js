@@ -25,7 +25,8 @@ export const TEXT = Object.freeze({
   UPLOAD_IMAGE: "Haz click para subir la imagen",
   TOTAL: "Total Nómina",
   PROMOTED: "Promovidos",
-  NEW_HIRES: "Nuevos Ingresos",
+  HIRES: "Nuevos Ingresos",
   NO_PROMOTED: "No hay promovidos",
   NO_NEW_HIRES: "No hay nuevos ingresos",
+  PRINT: "Imprimir Organigrama",
 });
