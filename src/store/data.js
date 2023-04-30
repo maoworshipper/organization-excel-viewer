@@ -6,9 +6,17 @@ export const useDataStore = create((set) => ({
   filteredData: [],
   promoted: [],
   newEmployees: [],
+  images: [],
   setData: (data) => {
     set({ data });
     set({ filteredData: data });
+  },
+  setImage: (image, id) => {
+    if (id === undefined) return;
+    const images = useDataStore.getState().images;
+    set({
+      images: [...images.filter((obj) => obj.id !== id), { image, id }],
+    });
   },
   setFilteredData: (monthSelected) => {
     const data = useDataStore.getState().data;
