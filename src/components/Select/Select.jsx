@@ -1,3 +1,4 @@
+import { useLanguageStore } from "../../store/language";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -8,17 +9,18 @@ import styles from "./Select.module.scss";
 
 export const SelectComponent = () => {
   const { months, monthSelected, handleChange } = useSelect();
+  const language = useLanguageStore((state) => state.language);
 
   return (
     <div className={styles.container}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">
-          {TEXT.FILTER_BY_MONTH}
+          {TEXT[language].FILTER_BY_MONTH}
         </InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          label={TEXT.FILTER_BY_MONTH}
+          label={TEXT[language].FILTER_BY_MONTH}
           value={monthSelected}
           onChange={handleChange}
         >

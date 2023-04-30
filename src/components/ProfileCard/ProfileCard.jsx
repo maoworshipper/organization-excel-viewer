@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useLanguageStore } from "../../store/language";
 import { ProfileImage } from "./ProfileImage";
 import styles from "./ProfileCard.module.scss";
 import { formatNumber } from "../../utils/formatNumber";
@@ -14,6 +15,8 @@ export const ProfileCard = ({
   Subarea = "",
   Nivel_Jerarquico = "",
 }) => {
+  const language = useLanguageStore((state) => state.language);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -28,11 +31,11 @@ export const ProfileCard = ({
       </div>
       <div className={styles.dataContainer}>
         <div className={styles.extraData}>
-          <p className={styles.smallText}>{TEXT.INCOME_DATE}</p>
+          <p className={styles.smallText}>{TEXT[language].INCOME_DATE_LABEL}</p>
           <p className={styles.boldText}>{Fecha_de_ingreso}</p>
         </div>
         <div className={styles.extraData}>
-          <p className={styles.smallText}>{TEXT.GROSS_SALARY}</p>
+          <p className={styles.smallText}>{TEXT[language].GROSS_SALARY_LABEL}</p>
           <p className={styles.boldText}>$ {formatNumber(Sueldo_bruto)}</p>
         </div>
       </div>
