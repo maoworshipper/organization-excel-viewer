@@ -15,3 +15,18 @@ export const datesConverter = (excelDate, format) => {
 
   return formats[format];
 };
+
+export const getLastMonth = (date) => {
+  const newDate = date.split("-");
+  const year = newDate[1];
+  const month = newDate[0];
+  const lastMonth = month - 1 === 0 ? 12 : month - 1;
+  return lastMonth < 10 ? `0${lastMonth}-${year}` : `${lastMonth}-${year}`;
+};
+
+export const getMonth = (date) => {
+  const newDate = date.split("-");
+  const month = newDate.length > 2 ? newDate[1] : newDate[0];
+  const year = newDate.length > 2 ? newDate[2] : newDate[1];
+  return `${month}-${year}`;
+};
