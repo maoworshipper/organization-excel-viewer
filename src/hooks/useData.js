@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { read, utils } from "xlsx";
 import { useDataStore } from "../store/data";
 import { formatKeysData } from "../utils/objectsFormatter";
+import {
+  getPromotedNames,
+  getNewEmployeesNames,
+  getTotalPayroll,
+} from "../utils/getPayrollChanges";
 
 const useData = () => {
   const [show, setShow] = useState({
@@ -13,6 +18,8 @@ const useData = () => {
   const filteredData = useDataStore((state) => state.filteredData);
   const data = useDataStore((state) => state.data);
   const setData = useDataStore((state) => state.setData);
+  const setPromoted = useDataStore((state) => state.setPromoted);
+  const setNewEmployees = useDataStore((state) => state.setNewEmployees);
 
   const importData = (e) => {
     const files = e.target.files;
@@ -46,12 +53,12 @@ const useData = () => {
 
   useEffect(() => {
     if (filteredData.length > 0 && filteredData.length !== data.length) {
-      const total = filteredData.reduce(
-        (acc, obj) => acc + obj.Sueldo_bruto,
-        0
-      );
-
+      const total = getTotalPayroll(filteredData);
       setTotal(total);
+      const promotedNames = getPromotedNames(data, filteredData);
+      setPromoted(promotedNames);
+      const newEmployeesNames = getNewEmployeesNames(filteredData);
+      setNewEmployees(newEmployeesNames);
       setIsFiltered(true);
     } else {
       setIsFiltered(false);
