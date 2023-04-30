@@ -1,0 +1,21 @@
+.infoBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #eee;
+    border: 1px solid #aaa;
+    border-radius: 0.5rem;
+    padding: 1rem;
+
+    span {
+      font-size: 1.05rem;
+      font-weight: bold;
+
+      &.value {
+        font-size: 1rem;
+        font-weight: normal;
+      }
+    }
+  }
