@@ -9,7 +9,7 @@ import { TEXT } from "./strings";
 import styles from "./App.module.scss";
 
 function App() {
-  const { show, total, importData, showChart } = useData();
+  const { isFiltered, show, total, importData, showChart } = useData();
 
   return (
     <main className={styles.main}>
@@ -28,9 +28,20 @@ function App() {
             <>
               <Select />
               <div className={styles.total}>
-                <span>{`${TEXT.TOTAL} $ ${formatNumber(total)}`}</span>
+                <span>{TEXT.TOTAL}</span>
+                <span className={styles.value}>
+                  {isFiltered ? `$ ${formatNumber(total)}` : "-"}
+                </span>
               </div>
-              <Button variant="contained" onClick={showChart}>
+              <Button
+                variant="contained"
+                onClick={showChart}
+                disabled={
+                  (show.chart && isFiltered) || !show.chart
+                    ? !isFiltered
+                    : isFiltered
+                }
+              >
                 {show.chart ? TEXT.SEE_TABLE : TEXT.SEE_CHART}
               </Button>
             </>
@@ -38,7 +49,7 @@ function App() {
         </div>
         {!show.chart ? <DataTable /> : null}
       </div>
-      {show.chart ? <OrganizationChart /> : null}
+      {show.chart && isFiltered ? <OrganizationChart /> : null}
     </main>
   );
 }

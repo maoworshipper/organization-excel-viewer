@@ -23,5 +23,5 @@ export const TEXT = Object.freeze({
   ACCEPTED_FORMATS: "Formatos aceptados: .csv, .xlsx, .xls",
   ORGANIZATION_CHART: "Organigrama",
   UPLOAD_IMAGE: "Haz click para subir la imagen",
-  TOTAL: "Total",
+  TOTAL: "Total Nómina",
 });

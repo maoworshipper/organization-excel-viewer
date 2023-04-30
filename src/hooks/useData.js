@@ -8,6 +8,7 @@ const useData = () => {
     elements: false,
     chart: false,
   });
+  const [isFiltered, setIsFiltered] = useState(false);
   const [total, setTotal] = useState(0);
   const filteredData = useDataStore((state) => state.filteredData);
   const data = useDataStore((state) => state.data);
@@ -44,11 +45,21 @@ const useData = () => {
   }, [data]);
 
   useEffect(() => {
-    const total = filteredData.reduce((acc, obj) => acc + obj.Sueldo_bruto, 0);
-    setTotal(total);
+    if (filteredData.length > 0 && filteredData.length !== data.length) {
+      const total = filteredData.reduce(
+        (acc, obj) => acc + obj.Sueldo_bruto,
+        0
+      );
+
+      setTotal(total);
+      setIsFiltered(true);
+    } else {
+      setIsFiltered(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredData]);
 
-  return { show, total, importData, showChart };
+  return { isFiltered, show, total, importData, showChart };
 };
 
 export default useData;
